@@ -1,0 +1,21 @@
+Options -Indexes
+
+# Protect files and directories
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Protect sensitive files
+<FilesMatch "^(database\.sql|config\.php)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Redirect all requests to index.php if file/directory doesn't exist
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [L]
+</IfModule> 
